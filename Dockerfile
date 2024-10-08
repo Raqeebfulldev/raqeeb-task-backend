@@ -69,7 +69,7 @@ CMD ["npm", "run", "start"]
 ################################################################################
 FROM base as dev
 
-ENV NODE_ENV dev
+ENV NODE_ENV=dev
 
 # Create a new user with UID and GID
 RUN addgroup --system appgroup && adduser --system --ingroup appgroup appuser
