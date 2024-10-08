@@ -3,7 +3,7 @@ import { Controller } from '../../shared/interfaces/controller.interface';
 import { InternalServerException, InvalidEnumValueException } from '../../shared/exceptions';
 import logger from '../../config/logger';
 import { OrderEnum, StatusEnum } from '../../shared/enums';
-import { IFilterOptions, IRecordsPayload } from './records.interface';
+import { IFilterOptions, IRecordsPayload, IRecordsResponse } from './records.interface';
 import RecordsService from './records.service';
 import { querySchema, searchSchema } from './records.dto';
 import { validate } from '../../shared/middlewares';
@@ -29,9 +29,9 @@ export default class RecordsController implements Controller {
     public getRecords = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const payload = await this._preparePayload(req, false);
-            logger.debug('Payload:', payload);
-            const records = await this._recordsService.getRecords(payload)
-            return res.status(StatusCodes.OK).json(records).end();
+            res.setHeader('Content-Type', 'application/json');
+            const response: IRecordsResponse = await this._recordsService.getRecords(payload);
+            return res.status(StatusCodes.OK).json(response);
 
             //eslint-disable-next-line
         } catch (error: any) {
@@ -46,8 +46,9 @@ export default class RecordsController implements Controller {
     public searchRecords = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const payload = await this._preparePayload(req, true);
-            const records = await this._recordsService.searchRecords(payload);
-            return res.status(StatusCodes.OK).json(records).end();
+            res.setHeader('Content-Type', 'application/json');
+            const response: IRecordsResponse = await this._recordsService.searchRecords(payload);
+            return res.status(StatusCodes.OK).json(response).end();
 
             //eslint-disable-next-line
         } catch (error: any) {
