@@ -52,7 +52,7 @@ const server = APP.listen(PORT, () => {
     APP.use(notFoundMiddleware);
 
     await initDatabase(); // initialize db connections
-    // await prepareDatabase(); // run migrations
+    await prepareDatabase(); // run migrations
     
   } catch (error) {
     logger.error('Unable to connect,', error);
