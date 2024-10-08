@@ -11,8 +11,9 @@ export interface IFilterOptions {
     };
 }
 
+export type ISafeRecord = Omit<IRecord, 'password'>;
 export interface IRecordsResponse {
-    records: IRecord[];
+    records: ISafeRecord[];
     total: number;
 }
 

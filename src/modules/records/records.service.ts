@@ -16,6 +16,7 @@ export default class RecordsService {
 
             const records = await this._recordModel
                 .find(filterOptions as IFilterOptions)
+                .select('-password')
                 .sort({ [sortBy]: order })
                 .skip(skip as number)
                 .limit(limit as number)
@@ -36,6 +37,7 @@ export default class RecordsService {
                     $text: { $search: search as string },
                     ...filterOptions,
                 })
+                .select('-password')
                 .sort({ [sortBy]: order })
                 .skip(skip as number)
                 .limit(limit as number)
