@@ -33,6 +33,7 @@ const RecordSchema: Schema = new Schema({
 RecordSchema.index({ username: 1 });
 RecordSchema.index({ created_at: 1 });
 RecordSchema.index({ status: 1 });
+RecordSchema.index({ leaked_sources: 1 });
 RecordSchema.index({ username: 1, status: 1 });
 RecordSchema.index({ created_at: 1, status: 1, username: 1 });
 RecordSchema.index({ username: 'text', url: 'text', status: 'text' });
