@@ -3,6 +3,8 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import { createServer, Server } from 'https';
+import fs from 'fs';
 
 // src imports & config
 import './config/env'
@@ -15,10 +17,13 @@ import { prepareDatabase } from './shared/migrations/store-json-data';
 
 // app container 
 const APP = express();
-
-// startup script
-const server = APP.listen(PORT, () => {
-  logger.info(`⚡️[server]: Server is running at http://localhost:${PORT} in ${ENV} mode`);
+const sslOptions = {
+  key: fs.readFileSync('./certs/privkey1.pem'),
+  cert: fs.readFileSync('./certs/fullchain1.pem'),
+};
+const server: Server = createServer(sslOptions, APP);
+server.listen(PORT, () => {
+  logger.info(`⚡️[server]: Server is running at https://localhost:${PORT} in ${ENV} mode`);
 });
 
 (async () => {
@@ -53,7 +58,7 @@ const server = APP.listen(PORT, () => {
 
     await initDatabase(); // initialize db connections
     await prepareDatabase(); // run migrations
-    
+
   } catch (error) {
     logger.error('Unable to connect,', error);
     process.exit(1);
