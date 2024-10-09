@@ -9,10 +9,6 @@ export interface IFilterOptions {
         $gte?: Date;
         $lte?: Date;
     };
-    modified_at?: {
-        $gte?: Date;
-        $lte?: Date;
-    };
 }
 
 export type ISafeRecord = Omit<IRecord, 'password'>;
