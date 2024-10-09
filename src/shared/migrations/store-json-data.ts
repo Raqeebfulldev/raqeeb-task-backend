@@ -46,7 +46,7 @@ async function _storeLargeJsonInMongo(filePath: string): Promise<void> {
 
 export async function prepareDatabase(): Promise<void> {
     try {
-        await mongoose.connection.dropDatabase();
+        await mongoose.connection.dropCollection('records');
         logger.info('Database dropped successfully');
 
         const filePath = path.join(__dirname, '../../../data/data.json');
