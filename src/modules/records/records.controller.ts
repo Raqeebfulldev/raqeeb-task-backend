@@ -77,15 +77,15 @@ export default class RecordsController implements Controller {
             filters.leaked_sources = Number(isSearch ? req.body.leaked_sources : req.query.leaked_sources);
         }
 
-        // Check for start and end date range for created_at
+        // Check for start and end date range for created_at and modified_at fields
         if (start || end) {
             filters.created_at = {};
-            if (start) {
-                filters.created_at.$gte = new Date(isSearch ? req.body.start : req.query.start as string);
-            }
-            if (end) {
-                filters.created_at.$lte = new Date(isSearch ? req.body.end : req.query.end as string);
-            }
+            filters.created_at.$gte = start ? new Date(isSearch ? req.body.start : req.query.start) : new Date(0);
+            filters.created_at.$lte = end ? new Date(isSearch ? req.body.end : req.query.end) : new Date();
+
+            filters.modified_at = {};
+            filters.modified_at.$gte = start ? new Date(isSearch ? req.body.start : req.query.start) : new Date(0);
+            filters.modified_at.$lte = end ? new Date(isSearch ? req.body.end : req.query.end) : new Date();
         }
 
         const response = {
