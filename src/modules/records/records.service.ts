@@ -38,7 +38,7 @@ export default class RecordsService {
 
             return new Promise((resolve, reject) => {
                 stream.on('end', () => {
-                    resolve({ records, total: totalCount });
+                    resolve({ records, total: totalCount, pages: Math.ceil(totalCount / limit) });
                 });
 
                 stream.on('error', (error) => {
@@ -57,13 +57,19 @@ export default class RecordsService {
         const { skip, limit, sortBy, order, filterOptions, search } = payload;
         try {
             const totalCount = await this._recordModel.countDocuments({
-                $text: { $search: search as string },
-                ...filterOptions,
+                $or: [
+                    { username: { $regex: search as string, $options: 'i' } },
+                    { url: { $regex: search as string, $options: 'i' } },
+                    ],
+                    ...filterOptions,
             }).exec();
 
             const query = this._recordModel
                 .find({
-                    $text: { $search: search as string },
+                    $or: [
+                        { username: { $regex: search as string, $options: 'i' } },
+                        { url: { $regex: search as string, $options: 'i' } },
+                    ],
                     ...filterOptions,
                 })
                 .select('-password')
@@ -88,7 +94,7 @@ export default class RecordsService {
 
             return new Promise((resolve, reject) => {
                 stream.on('end', () => {
-                    resolve({ records, total: totalCount });
+                    resolve({ records, total: totalCount, pages: Math.ceil(totalCount / limit) });
                 });
 
                 stream.on('error', (error) => {
