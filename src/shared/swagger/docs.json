@@ -7,11 +7,11 @@
   },
   "servers": [
     {
-      "url": "http://176.57.184.164:8087"
+      "url": "https://raqeeb-task.abdulmonaim.top/api/v0.1"
     }
   ],
   "paths": {
-    "/api/v0.1/records": {
+    "/records": {
       "get": {
         "summary": "Get Records",
         "parameters": [
@@ -139,7 +139,7 @@
         }
       }
     },
-    "/api/v0.1/search": {
+    "/search": {
       "post": {
         "summary": "Search Records",
         "requestBody": {
