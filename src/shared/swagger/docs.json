@@ -42,7 +42,7 @@
             "name": "sortBy",
             "schema": {
               "type": "string",
-              "enum": ["created_at", "username"],
+              "enum": ["created_at", "username", "leaked_sources"],
               "default": "created_at"
             },
             "description": "Field to sort records by",
@@ -129,7 +129,8 @@
                         }
                       }
                     },
-                    "total": { "type": "integer" }
+                    "total": { "type": "integer" },
+                    "pages": { "type": "integer" }
                   }
                 }
               }
@@ -164,7 +165,7 @@
                   },
                   "sortBy": {
                     "type": "string",
-                    "enum": ["created_at", "username"],
+                    "enum": ["created_at", "username", "leaked_sources"],
                     "default": "created_at"
                   },
                   "order": {
@@ -216,7 +217,8 @@
                         }
                       }
                     },
-                    "total": { "type": "integer" }
+                    "total": { "type": "integer" },
+                    "pages": { "type": "integer" }
                   }
                 }
               }
