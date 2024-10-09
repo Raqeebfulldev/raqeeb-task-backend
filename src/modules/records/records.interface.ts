@@ -9,12 +9,17 @@ export interface IFilterOptions {
         $gte?: Date;
         $lte?: Date;
     };
+    modified_at?: {
+        $gte?: Date;
+        $lte?: Date;
+    };
 }
 
 export type ISafeRecord = Omit<IRecord, 'password'>;
 export interface IRecordsResponse {
     records: ISafeRecord[];
     total: number;
+    pages: number;
 }
 
 export interface IRecordsPayload {
