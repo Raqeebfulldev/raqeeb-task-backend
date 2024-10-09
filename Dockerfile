@@ -54,7 +54,8 @@ USER appuser
 
 # Create necessary directories and set ownership to appuser
 RUN mkdir -p /usr/app/upload \
-    && mkdir -p /usr/app/.logs
+    && mkdir -p /usr/app/.logs \
+    && mkdir -p /usr/app/certs
 
 # Copy package.json so that package manager commands can be used.
 COPY package.json .
