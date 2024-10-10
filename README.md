@@ -1,4 +1,81 @@
-# Performance Optimization Techniques
+# raqeeb-task-backend
+
+## Overview
+
+This README will guide you through setting up the application in both development and production modes using Docker Compose, API documentation, and outline the performance optimization techniques implemented in the project.
+
+## Prerequisites
+
+- **Docker**: Ensure Docker is installed on your machine. You can download it from [here](https://www.docker.com/get-started).
+- **Docker Compose**: Ensure Docker Compose is installed. You can download it from [here](https://docs.docker.com/compose/install/).
+
+## Setup
+
+### 1. Clone the Repository
+
+```bash
+git clone git@github.com:Raqeebfulldev/raqeeb-task-backend.git
+cd raqeeb-task-backend
+```
+
+### 2. Set Up Environment Variables
+
+The application requires specific environment variables for development and production modes. Follow these steps to configure the environment:
+
+- For **Development** mode:
+  - Create a new file named `.env.dev` in the root directory.
+  - Copy the contents of the `.env.sample` file into the `.env.dev` file:
+
+    ```bash
+    cp .env.sample .env.dev
+    ```
+
+  - Update the values in `.env.dev` as necessary.
+
+- For **Production** mode:
+  - Create a new file named `.env.prod` in the root directory.
+  - Copy the contents of the `.env.sample` file into the `.env.prod` file:
+
+    ```bash
+    cp .env.sample .env.prod
+    ```
+
+  - Update the values in `.env.prod` with production-specific values.
+
+### 3. Add SSL Certificates for Production
+
+For production, you need to provide self-signed certificates:
+
+- Place the SSL certificates in a directory called `/certs` in the root of your project.
+  - Example:
+    - `/certs/privkey1.pem`
+    - `/certs/fullchain1.pem`
+
+### 4. Running the Application
+
+- **Development Mode**:
+  To run the app in development mode, execute the following command:
+
+  ```bash
+  docker-compose -f compose.yaml -f compose.dev.yaml up -d --build
+  ```
+
+- **Production Mode**:
+  To run the app in production mode, execute the following command:
+
+  ```bash
+  docker-compose -f compose.yaml -f compose.prod.yaml up -d --build
+  ```
+
+## API Documentation
+
+This project uses **Swagger** for API documentation, you can access the full API documentation by navigating to the following link in your browser:
+
+- **Swagger API Documentation**: [click here](https://app.swaggerhub.com/apis/YASSAALQESSDEV/records-api-v0.1/1.0.0-oas3#)
+
+This link provides a description of API endpoints, and detailed information about request and response structures.
+
+## Performance Optimization Techniques
 
 When working with large datasets, it is crucial to implement performance optimization techniques to ensure efficient data processing and querying. In this task, several strategies were employed to enhance performance
 
