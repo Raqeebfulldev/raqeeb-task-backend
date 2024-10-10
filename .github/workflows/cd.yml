@@ -26,7 +26,7 @@ jobs:
       PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
       username: ${{ secrets.DOCKER_USERNAME }}
       repo: ${{ secrets.DOCKER_REPO }}
-      tag: ${{ github.DOCKER_IMAGE_TAG }}
+      tag: ${{ secrets.DOCKER_IMAGE_TAG }}
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Setup SSH Key
