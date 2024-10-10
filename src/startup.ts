@@ -3,7 +3,8 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
-import { createServer, Server } from 'https';
+import { createServer, Server as SecureServer } from 'https';
+import { Server } from 'http';
 import fs from 'fs';
 
 // src imports & config
@@ -17,14 +18,23 @@ import { prepareDatabase } from './shared/migrations/store-json-data';
 
 // app container 
 const APP = express();
-const sslOptions = {
-  key: fs.readFileSync('./certs/privkey1.pem'),
-  cert: fs.readFileSync('./certs/fullchain1.pem'),
-};
-const server: Server = createServer(sslOptions, APP);
-server.listen(PORT, () => {
-  logger.info(`⚡️[server]: Server is running at https://localhost:${PORT} in ${ENV} mode`);
-});
+let server: Server | SecureServer | null = null;
+if (ENV === 'dev') {
+  server = APP.listen(PORT, () => {
+    logger.info(`⚡️[server]: Server is running at http://localhost:${PORT} in ${ENV} mode`);
+  });
+}
+else {
+  // Load SSL certificates
+  const sslOptions = {
+    key: fs.readFileSync('./certs/privkey1.pem'),
+    cert: fs.readFileSync('./certs/fullchain1.pem'),
+  };
+  server = createServer(sslOptions, APP);
+  server.listen(PORT, () => {
+    logger.info(`⚡️[server]: Server is running at https://localhost:${PORT} in ${ENV} mode`);
+  });
+}
 
 (async () => {
   try {
