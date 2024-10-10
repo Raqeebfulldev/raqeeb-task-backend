@@ -26,6 +26,7 @@ jobs:
       PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
       username: ${{ secrets.DOCKER_USERNAME }}
       repo: ${{ secrets.DOCKER_REPO }}
+      tag: ${{ github.DOCKER_IMAGE_TAG }}
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Setup SSH Key
@@ -44,4 +45,4 @@ jobs:
 
       - name: Deploy to Server
         run: |
-          sshpass -p "$SSH_PASS" ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "cd /app && docker pull $username/$repo:latest && docker-compose -f compose.yml down && docker-compose -f compose.yml up -d --build"
+          sshpass -p "$SSH_PASS" ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "cd /app && docker pull $username/$repo:$tag && docker-compose -f compose.yml down && docker-compose -f compose.yml up -d --build"
